@@ -1,107 +1,180 @@
-/*
- * Buffer.cpp
- *
- *  Created on: Sep 26, 2012
- *      Author: knad0001
- */
-#include "Buffer.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
+#include "../includes/Buffer.h"
 
-/*
- "The thing that has always disturbed me about O_DIRECT is that
- the whole interface is just stupid, and was probably designed
- by a deranged monkey on some serious mind-controlling
- substances."—Linus
- */
 
-const int BLOCKSIZE { 512 }; // Sollte wahrscheinlich ein vielfaches von 512 sein.
-// alignment to the logical block - The logical block size can be determined using the ioctl(2) BLKSSZGET operation or from the shell using the command: blockdev --getss
-
-Buffer::Buffer(char* input) {
-	position = 0;
-	int result = posix_memalign((void**) &current_buffer, BLOCKSIZE, BLOCKSIZE);
-	if (result != 0) {
-		printf("Konnte keinen Speicher für den Puffer bekommen: %s\n", strerror(errno));
-		exit(1);
-	}
-	result = posix_memalign((void**) &prev_buffer, BLOCKSIZE, BLOCKSIZE);
-	if (result != 0) {
-		printf("Konnte keinen Speicher für den Puffer bekommen: %s\n", strerror(errno));
-		exit(1);
-	}
-	fileHandle = open(input, O_RDONLY | O_DIRECT);
-	if (fileHandle == -1) {
-		printf("Datei konnte nicht geöffnet werden: %s\n", strerror(errno));
-		exit(1);
-	}
-	readFromFile(current_buffer);
+int Buffer::getFileLength(ifstream *fileStream) {
+	int pos = (int) fileStream->tellg();
+	fileStream->seekg(0, ios_base::end);
+	int length = (int) fileStream->tellg();
+	fileStream->seekg(pos, ios_base::beg);
+	return length;
 }
 
-void Buffer::readFromFile(char* where) {
-	ssize_t res = read(fileHandle, where, BLOCKSIZE);
-	if (res == -1) {
-		printf("Datei konnte nicht gelesen werden: %s\n", strerror(errno));
-		exit(1);
+Buffer::Buffer(const char *file, int size, int segments) {
+	if (segments < 1) {
+		printf("A buffer can't have less than 1 segment. Given segments: %d\n", segments);
+		throw;
 	}
+	_fileCurrentPos = 0;
+	_bufferSize = size;
+	_file = file;
+	_segments = segments;
+
+	_buffer = new char[size];
+	for (int i = 0; i < _bufferSize; i++) {
+		_buffer[i] = '\0';
+	}
+
+	_loadedSegments = new int[segments];
+	for (int i = 0; i < segments; i++) {
+		_loadedSegments[i] = -1;
+	}
+
+	//open the file to get file length, then close it again
+	ifstream *fileStream = new ifstream();
+	fileStream->open(_file);
+	if(!fileStream->good()) {
+		throw("Error: file could not be opened. does it exist? do you have access?");
+	}
+	_fileLength = Buffer::getFileLength(fileStream);
+	fileStream->close();
+
+	_fileSegmentLength = _bufferSize / _segments;
 }
 
-Buffer::~Buffer() {
-	free(current_buffer);
-	free(prev_buffer);
+int Buffer::getSegmentNumber(int position) {
+	return position / _fileSegmentLength;
+}
 
-	int res = close(fileHandle);
-	if (res == -1) {
-		printf("Datei konnte nicht geschlossen werden.");
-		exit(1);
+void Buffer::loadSegment(int segment, int loadToPosition) {
+	//printf("Loading segment %d to position %d\n", segment, loadToPosition);
+	//char **actualPosition = (char **) (&_buffer + (_fileSegmentLength * loadToPosition));
+
+
+
+	int fileSegmentStartPos = segment * _fileSegmentLength;
+	char *innerBuffer = new char[_fileSegmentLength];
+
+	ifstream *fileStream = new ifstream();
+	fileStream->open(_file);
+	fileStream->seekg(fileSegmentStartPos, ios::beg);
+	fileStream->read(innerBuffer, _fileSegmentLength);
+	int readChars = (int) fileStream->gcount();
+	fileStream->close();
+
+	int bufferIndexStart = _fileSegmentLength * loadToPosition;
+
+	for (int i = 0; i < _fileSegmentLength && i < readChars; i++) {
+		_buffer[bufferIndexStart + i] = innerBuffer[i];
 	}
+
+	_loadedSegments[loadToPosition] = segment;
+
+	delete[] innerBuffer;
+}
+
+int Buffer::getBufferPosition(int position) {
+	int segment = getSegmentNumber(position);
+
+	int firstFreeSegment = -1;
+	int lowestSegment = -1;
+	int highestSegment = -1;
+
+	for (int i = 0; i < _segments; i++) {
+		// get first free segment
+		if (_loadedSegments[i] == -1 && firstFreeSegment == -1) {
+			firstFreeSegment = i;
+		}
+
+		// get lowest segment
+		if (lowestSegment == -1 || _loadedSegments[i] < _loadedSegments[lowestSegment]) {
+			lowestSegment = i;
+		}
+
+		// get highest segment
+		if (highestSegment == -1 || _loadedSegments[i] > _loadedSegments[highestSegment]) {
+			highestSegment = i;
+		}
+
+		// Segment already loaded, so just take it
+		if (_loadedSegments[i] == segment) {
+			return (i * _fileSegmentLength) + (position % _fileSegmentLength);
+		}
+	}
+
+	//Segment not yet loaded:
+
+	// take a free segment slot, if one is found
+	if (firstFreeSegment != -1) {
+		loadSegment(segment, firstFreeSegment);
+		return (firstFreeSegment * _fileSegmentLength) + (position % _fileSegmentLength);
+	}
+
+	// overwrite the lowest segment slot, if segment number is higher than all loaded segments
+	if (segment > _loadedSegments[highestSegment]) {
+		loadSegment(segment, lowestSegment);
+		return (lowestSegment * _fileSegmentLength) + (position % _fileSegmentLength);
+	}
+
+	// overwrite the highest segment slot, if segment number is lower than all loaded segments
+	if (segment < _loadedSegments[lowestSegment]) {
+		loadSegment(segment, highestSegment);
+		return (highestSegment * _fileSegmentLength) + (position % _fileSegmentLength);
+	}
+
+	printf("Unexpected Error! No segment slot found to overwrite! This should never happen. Maybe zero or negative segment count?\n");
+	return -1;
+}
+
+char Buffer::_getChar(int position) {
+	if (position < 0 || position >= _fileLength) {
+		printf("Can't get char at position %d\n", position);
+		throw;
+	}
+
+	return _buffer[getBufferPosition(position)];
+}
+
+int Buffer::getPosition() {
+	return _fileCurrentPos;
 }
 
 char Buffer::getChar() {
-	if (position < 0) {
-		position++;
-		if (position < -511){
-			printf("Mehr als 512 Schritte zurück werden nicht unterstützt.");
-			exit(1);
-		}
-		return prev_buffer[BLOCKSIZE + position - 1];
-	}
-	if (position >= BLOCKSIZE) {
-		auto temp_buffer = prev_buffer;
-		prev_buffer = current_buffer;
-		current_buffer = temp_buffer;
-		memset(current_buffer, 0, BLOCKSIZE);
-		readFromFile(current_buffer);
-		position = 0;
-	}
-	position++;
-	return current_buffer[position - 1];
+	return _getChar(_fileCurrentPos++);
 }
 
-void Buffer::ungetChar() {
-	position--;
+char Buffer::ungetChar() {
+	return _getChar(--_fileCurrentPos);
 }
 
-int Buffer::getIndex() {
-	return position;
+char Buffer::ungetChar(int back) {
+	if(back == 0) {
+		return '\0';
+	}
+
+	return _getChar(_fileCurrentPos -= back);
 }
 
-bool Buffer::hasCharLeft() {
-	if (position <= 0) {
-		return true;
-	}
-	char nextChar;
-	auto counter = 0;
-	do {
-		nextChar = getChar();
-		counter++;
-	} while (nextChar == ' ' || nextChar == '\n' || nextChar == '\r');
-	for (auto i = 0; i < counter; i++){
-		ungetChar();
-	}
-	return (nextChar != '\0');
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+void Buffer::load(void *somebuffer) {
+	return;
+}
+#pragma clang diagnostic pop
+
+void Buffer::allocateBufferMemory() {
+	return;
+}
+
+bool Buffer::isEnd() {
+	bool end = _fileCurrentPos >= _fileLength;
+	return end;
+}
+
+int Buffer::getFileLength() {
+	return this->_fileLength;
+}
+
+Buffer::~Buffer() {
+	delete[] _buffer;
+	delete[] _loadedSegments;
 }

@@ -7,8 +7,9 @@
 #include <stdio.h>
 #include <fstream>
 #include <string.h>
-#include "../../Scanner/src/Scanner.h"
-#include "Parser.h"
+#include <includes/Parser.h>
+#include "../../Scanner/includes/Scanner.h"
+
 
 int main(int argc, char** argv) {
 	char* input;

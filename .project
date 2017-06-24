@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SysProgTemplate_V11</name>
+	<name>Sysprog2017@Sysprog2017</name>
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<name>org.eclipse.cdt.make.core.makeBuilder</name>
 			<triggers>clean,full,incremental,</triggers>
 			<arguments>
 				<dictionary>
-					<key>?children?</key>
-					<value>?name?=outputEntries\|?children?=?name?=entry\\\\\\\|\\\|\||</value>
-				</dictionary>
-				<dictionary>
-					<key>?name?</key>
-					<value></value>
+					<key>org.eclipse.cdt.core.errorOutputParser</key>
+					<value>org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.append_environment</key>
@@ -26,12 +22,36 @@
 					<value>all</value>
 				</dictionary>
 				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.arguments</key>
+					<value></value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.command</key>
+					<value>D:/MinGW/bin/mingw32-make.exe</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.location</key>
+					<value>D:/_workspaces/cpp_ws/Sysprog2017</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.target.auto</key>
+					<value>all</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.target.clean</key>
+					<value>clean</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.target.inc</key>
+					<value>all</value>
+				</dictionary>
+				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildArguments</key>
 					<value></value>
 				</dictionary>
 				<dictionary>
-					<key>org.eclipse.cdt.make.core.buildCommand</key>
-					<value>make</value>
+					<key>org.eclipse.cdt.make.core.buildLocation</key>
+					<value>D:/_workspaces/cpp_ws/Sysprog2017</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -54,6 +74,14 @@
 					<value>true</value>
 				</dictionary>
 				<dictionary>
+					<key>org.eclipse.cdt.make.core.enabledIncrementalBuild</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.environment</key>
+					<value>VERBOSE=1|CMAKE_NO_VERBOSE=1|</value>
+				</dictionary>
+				<dictionary>
 					<key>org.eclipse.cdt.make.core.fullBuildTarget</key>
 					<value>all</value>
 				</dictionary>
@@ -63,55 +91,747 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
-					<value>true</value>
+					<value>false</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.linuxtools.rpm.rpmlint.rpmlintBuilder</name>
+			<name>org.eclipse.cdt.make.core.ScannerConfigBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.make.core.makeNature</nature>
+		<nature>org.eclipse.cdt.make.core.ScannerConfigNature</nature>
 		<nature>org.eclipse.cdt.core.ccnature</nature>
-		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
-		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
-		<nature>org.eclipse.linuxtools.rpm.rpmlint.rpmlintNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
 	</natures>
-	<filteredResources>
-		<filter>
-			<id>1418741164905</id>
-			<name></name>
-			<type>26</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-debug</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1418741164912</id>
-			<name></name>
-			<type>26</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-lib</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1418741164933</id>
-			<name></name>
-			<type>26</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-sharedlib</arguments>
-			</matcher>
-		</filter>
-	</filteredResources>
+	<linkedResources>
+		<link>
+			<name>[Subprojects]</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Subprojects]/gtest</name>
+			<type>2</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/gtest</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AutomatTest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] BufferTest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainExe/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainTest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserExe/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserTest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerExe/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerTest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] StringtableTest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] SymboltableTest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] BufferLib/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AutomatTest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AutomatTest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AutomatTest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AutomatTest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AutomatTest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] BufferTest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] BufferTest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] BufferTest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] BufferTest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] BufferTest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainExe/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainExe/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainExe/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainExe/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainExe/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainTest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainTest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainTest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainTest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainTest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserExe/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserExe/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserExe/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserExe/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserExe/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserTest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserTest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserTest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserTest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserTest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerExe/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerExe/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerExe/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerExe/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerExe/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerTest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerTest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerTest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerTest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerTest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] StringtableTest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] StringtableTest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] StringtableTest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] StringtableTest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] StringtableTest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] SymboltableTest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] SymboltableTest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] SymboltableTest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] SymboltableTest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] SymboltableTest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] BufferLib/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] BufferLib/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] BufferLib/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] BufferLib/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] BufferLib/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files/AllTests.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/AllTests.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files/TestAutomat.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Automat/src/TestAutomat.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files/TestBuffer.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Buffer/src/TestBuffer.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files/TestParser.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Parser/src/TestParser.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files/TestScanner.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Scanner/src/TestScanner.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files/TestStringTab.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Symboltable/src/TestStringTab.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AllTests/Source Files/TestSymboltable.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Symboltable/src/TestSymboltable.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] AutomatTest/Source Files/TestAutomat.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Automat/src/TestAutomat.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] BufferTest/Source Files/TestBuffer.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Buffer/src/TestBuffer.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainExe/Source Files/main.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/main.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] MainTest/Source Files/mainTest.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/mainTest.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserExe/Source Files/ParserExe.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Parser/src/ParserExe.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ParserTest/Source Files/TestParser.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Parser/src/TestParser.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerExe/Source Files/ScannerExe.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Scanner/src/ScannerExe.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ScannerTest/Source Files/TestScanner.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Scanner/src/TestScanner.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] StringtableTest/Source Files/TestStringTab.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Symboltable/src/TestStringTab.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] SymboltableTest/Source Files/TestSymboltable.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Symboltable/src/TestSymboltable.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/Source Files/Automat.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Automat/src/Automat.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/Source Files/Stack.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Automat/src/Stack.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] AutomatLib/Source Files/Syntax.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Automat/src/Syntax.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] BufferLib/Source Files/Buffer.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Buffer/src/Buffer.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Source Files/Errors.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Parser/src/Errors.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Source Files/ParseTree.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Parser/src/ParseTree.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Source Files/Parser.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Parser/src/Parser.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ParserLib/Source Files/TokenSequence.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Parser/src/TokenSequence.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Source Files/Information.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Scanner/src/Information.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Source Files/Scanner.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Scanner/src/Scanner.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Source Files/Token.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Scanner/src/Token.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ScannerLib/Source Files/TokenTypeRegistry.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Scanner/src/TokenTypeRegistry.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/Source Files/StringTab.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Symboltable/src/StringTab.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/Source Files/Symboltable.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Symboltable/src/Symboltable.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] SymboltableLib/Source Files/SymtabEntry.cpp</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/Symboltable/src/SymtabEntry.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Source Files/gtest-all.cc</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/gtest/src/gtest-all.cc</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Source Files/gtest_main.cc</name>
+			<type>1</type>
+			<location>D:/_workspaces/cpp_ws/Sysprog2017/gtest/src/gtest_main.cc</location>
+		</link>
+	</linkedResources>
 </projectDescription>

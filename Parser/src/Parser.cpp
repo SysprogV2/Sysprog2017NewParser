@@ -5,7 +5,8 @@
  *      Author: marius
  */
 
-#include "Parser.h"
+#include <includes/Parser.h>
+#include "../../Scanner/includes/Scanner.h"
 
 Parser::Parser(Scanner* s, char* output) {
 	scanner = s;

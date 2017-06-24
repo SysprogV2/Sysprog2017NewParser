@@ -1,3 +1,6 @@
+#include <includes/Node.h>
+#include "../../Scanner/includes/Token.h"
+
 /*
  * Node.cpp
  *
@@ -5,7 +8,6 @@
  *      Author: marvin
  */
 
-#include "Node.h"
 
 Node::Node(NodeType type) :
 		infoKey(0), subnodes_count(0), infoLexem(), token() {

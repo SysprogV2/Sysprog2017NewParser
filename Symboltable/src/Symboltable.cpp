@@ -4,114 +4,115 @@
  *  Created on: Sep 26, 2012
  *      Author: knad0001
  */
-
-#include "Symboltable.h"
-#include <stdlib.h>
-#include <string.h>
+#include "../includes/Symboltable.h"
 
 Symboltable::Symboltable() {
-	memsize = 128;
-	keysizemax = memsize;
-	informations = (Information**) malloc(memsize * sizeof(Information*));
-	memset(informations, '\0', memsize * sizeof(Information*));
-	keys = (int*) malloc(memsize * sizeof(int));
-	keysize = 0;
-	initSymbols();
+	density = new int[TABLE_SIZE];
+	density[0] = 0;
+
+	strTab = new StringTab();
+//	initSymbols();
 }
 
 Symboltable::~Symboltable() {
-	for (uint16_t i = 0; i < memsize; i++) {
-		if (informations[i] != '\0') {
-			delete (informations[i]);
-		}
-	}
-	//informations[i].nextInformation werden im Destruktor der "obersten" Informationen gelöscht.
-	free(informations);
-	free(keys);
+	delete strTab;
+	delete[] density;
 }
 
-uint16_t Symboltable::hash(char* ch) {
-	uint16_t ergebnis = 0;
-	uint16_t i = 0;
-	while (ch[i] != '\0') {
-		ergebnis += (uint16_t) ch[i];
-		i++;
-	}
+///*
+// * from Algorithms, 4th edition by Sedgewick & Wayne
+// */
+//int Symboltable::hash(const char *lexem) {
+//	int hash = 0;
+//	const char *tmpPtr = lexem;
+//	while (tmpPtr[0] != '\0') {
+//		hash = (R_CONST * hash + tmpPtr[0]) % TABLE_SIZE;
+//		tmpPtr++;
+//	}
+//	return hash;
+//}
 
-	return ergebnis % memsize;
+int Symboltable::hash(char *str)
+{
+	unsigned long hash = 5381;
+	int c;
+
+	while (c = *str++)
+		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+	return hash % TABLE_SIZE;
 }
 
-Information* Symboltable::getInfo(uint16_t key) {
-	if (key >= keysize) { // Also ist key auf jeden Fall in der Symboltabelle
-		return '\0';
-	}
-	uint16_t derHash = keys[key];
-
-	Information* i = informations[derHash];
-	while (i->getKey() != key) {
-		i = i->getNextInfo();
-	}
-	return i;
-}
-
-Information* Symboltable::searchInfo(char* lexem) {
-	uint16_t derHash = hash(lexem);
-	Information* info = informations[derHash];
-	while (info != '\0' && strcmp(info->getLexem(), lexem) != 0) {
-		info = info->getNextInfo();
-	}
-	return info;
-}
-
-void Symboltable::keySizeBigger() {
-	keysize++;
-	if (keysize >= keysizemax) {
-		keysizemax *= 2;
-		int* tempList = (int*) malloc(keysizemax * sizeof(int));
-		memcpy(tempList, keys, keysizemax / 2 * sizeof(int));
-		free(keys);
-		keys = tempList;
-	}
-}
-
-uint16_t Symboltable::newInfo(char* lexem, InfoTyp t) {
-	uint16_t derHash = hash(lexem);
-	uint16_t key = keysize;
-	Information* newInfo = new Information(lexem, key);
-	newInfo->setType(t);
-	keys[key] = derHash;
-	keySizeBigger();
-	Information* i_next = informations[derHash];
-	if (i_next == '\0') {
-		i_next = newInfo;
-		informations[derHash] = i_next;
+SymtabEntry* Symboltable::insert(char *lexem, int size) {
+//	size++;
+	int key = hash(lexem);
+	if (hashTab[key] == nullptr) {
+		hashTab[key] = new SymtabEntry();
 	} else {
-		do {
-			if (t == i_next->getType()
-					&& strcmp(lexem, i_next->getLexem()) == 0) {
-				keysize--;
-				delete newInfo;
-				return i_next->getKey();
-			}
-			if (i_next->getNextInfo() != '\0') {
-				i_next = i_next->getNextInfo();
-			}
-		} while (i_next->getNextInfo() != '\0');
-		i_next->setNextInfo(newInfo);
+		SymtabEntry* prev = hashTab[key];
+		hashTab[key] = new SymtabEntry(prev);
 	}
-
-	return key;
+	char* lexemPtr = strTab->insert(lexem, size);
+	density[key]++;
+	hashTab[key]->setInfo(new Information(lexemPtr));
+	return hashTab[key];
 }
+
+/* checks if the given lexem is already in the table */
+/* returns NULL if not 								 */
+/* returns corresponding Information* object if it is*/
+Information* Symboltable::lookup(char* lexem) {
+	int key = hash(lexem);
+	SymtabEntry* entry = hashTab[key];
+	int tmp = 0;
+	while (tmp < density[key]) {
+		tmp++;
+		Information* info = entry->getInfo();
+		if (info->matches(lexem)) return info;
+		entry = entry->getNext();
+	}
+	return nullptr;
+}
+
+void Symboltable::print() {
+	int key = 0;
+	/* crowling through the whole table */
+	while (key < TABLE_SIZE) {
+		std::cout << "Bucket #" << key << " :: ";
+		SymtabEntry* entry = hashTab[key];
+		int tmp = 0;
+		/* crawling through the bucket */
+		while (tmp < density[key]) {
+			Information* info = entry->getInfo();
+			std::cout << " -> " << info->getLexem();
+			entry = entry->getNext();
+			tmp++;
+		}
+		key++;
+		std::cout << std::endl;
+	}
+}
+
 
 void Symboltable::initSymbols() {
-	// Keys für reservierte Ausdrücke:
-	newInfo((char *) "if", InfoTyp::iftyp);
-	newInfo((char *) "IF", InfoTyp::iftyp);
-	newInfo((char *) "while", InfoTyp::whiletyp);
-	newInfo((char *) "WHILE", InfoTyp::whiletyp);
-	newInfo((char *) "else", InfoTyp::elsetyp);
-	newInfo((char *) "ELSE", InfoTyp::elsetyp);
-	newInfo((char *) "int", InfoTyp::inttyp);
-	newInfo((char *) "write", InfoTyp::writetyp);
-	newInfo((char *) "read", InfoTyp::readtyp);
+
+	insert("write", 5);
+	insert("WRITE", 5);
+	insert("read", 4);
+	insert("READ", 4);
+
+	insert("if", 2);
+	insert("IF", 2);
+
+	insert("else", 4);
+	insert("ELSE", 4);
+	insert("int", 3);
+	insert("INT", 3);
+
+	insert("while", 5);
+	insert("WHILE", 5);
+}
+
+void Symboltable::attachType(char* lexem, CheckableType type) {
+	this->lookup(lexem)->setType(type);
 }
