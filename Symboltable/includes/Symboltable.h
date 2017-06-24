@@ -27,8 +27,9 @@ public:
 	virtual ~Symboltable();
 
 //	int hash( char *lexem);
-	int hash(char *lexem);
-	SymtabEntry* insert(char *lexem, int size);
+	static int hash(char *lexem);
+	SymtabEntry* insert(char *lexem, int size, Token* token);
+	Information* lookup(int key);
 	Information* lookup(char* lexem);
 	void attachType (char* lexem, CheckableType type);
 	void initSymbols();

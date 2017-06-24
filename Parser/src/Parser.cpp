@@ -8,11 +8,12 @@
 #include <cstring>
 #include "../includes/Parser.h"
 #include "../../Scanner/includes/Scanner.h"
+#include "../../Automat/includes/Syntax.h"
+
 
 Parser::Parser(Scanner* s, char* output) {
 	scanner = s;
-	token = new Token();
-	scanner->nextToken(token);
+	token = scanner->nextToken();
 	code.open(output);
 	labelcounter = 0;
 }
@@ -37,7 +38,7 @@ Node* Parser::parseProg() {
 Node* Parser::parseDecls() {
 	auto decls = createNode(NodeType::DECLS);
 	auto info = token->getInformation();
-	if (info->getType() == InfoTyp::inttyp) {
+	if (info->getType() == Syntax::States::INTKEY_Z) {
 		decls->addNode(parseDecl());
 		decls->addNode(match(State::Semikolon));
 		decls->addNode(parseDecls());
@@ -217,7 +218,7 @@ Node* Parser::match(State typ) {
 	}
 	auto leaf = createNode(NodeType::LEAF);
 	leaf->setToken(token);
-	leaf->setKey(token->getKey(), token->getValue());
+	leaf->setKey(token->getKey(), token->getLexem());
 	nextToken();
 	return leaf;
 }
@@ -228,14 +229,14 @@ Node* Parser::match(InfoTyp typ) {
 	}
 	auto leaf = createNode(NodeType::LEAF);
 	leaf->setToken(token);
-	leaf->setKey(token->getKey(), token->getValue());
+	leaf->setKey(token->getKey(), token->getLexem());
 	nextToken();
 	return leaf;
 }
 
 void Parser::error() {
 	fprintf(stderr, "unexpected token '%s' at line '%d', column '%d'\n",
-			token->getValue(), token->getLine(), token->getColumn());
+			token->getLexem(), token->getLine(), token->getColumn());
 	printf("stop\n");
 	exit(1);
 }
@@ -285,7 +286,7 @@ void Parser::typeCheck(Node* node) {
 		if (node->getSubnodesCount() == 0) {
 			node->setCheckType(CheckType::noType);
 		} else {
-			if (scanner->getInfo(node->getNode(1)->getKey())->getValue() > 0) {
+			if (scanner->getInfo(node->getNode(1)->getKey())->getToken()->getValue() > 0) {
 				node->setCheckType(CheckType::arrayType);
 			} else {
 				errorTypeCheck("no valid dimension",
@@ -401,7 +402,7 @@ void Parser::typeCheck(Node* node) {
 			} else {
 				node->setCheckType(CheckType::intType);
 			}
-		} else if (firstNode->getType() == InfoTyp::Integer) {
+		} else if (firstNode->getType() == States::InfoTyp::Integer) {
 			node->setCheckType(CheckType::intType);
 		} else if (firstNode->getType() == InfoTyp::Identifier) {
 			typeCheck(node->getNode(1));
@@ -472,7 +473,7 @@ void Parser::makeCode(Node* node) {
 	} else if (node->getType() == NodeType::ARRAY) {
 		if (node->getSubnodesCount() > 0) {
 			code << " "
-					<< scanner->getInfo(node->getNode(1)->getKey())->getValue()
+					<< scanner->getInfo(node->getNode(1)->getKey())->->getValue()
 					<< endl;
 		} else {
 			code << " 1" << endl;

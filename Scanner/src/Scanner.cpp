@@ -50,6 +50,10 @@ Scanner::~Scanner() {
 	delete this->idenInt;
 }
 
+Information* Scanner::getInfo(int key) {
+	return stab->lookup(key);
+}
+
 /*
  * feeds characters to the automat, until the new lexem is found.
  * Then tries to attribute it to some token.
@@ -92,7 +96,7 @@ Token *Scanner::nextToken() {
 	if (tokenType == Syntax::IDEN_Z) {
 		info = stab->lookup(lexem);
 		if (info == nullptr) {
-			SymtabEntry* entry = stab->insert(lexem, lexemLength);
+			SymtabEntry* entry = stab->insert(lexem, lexemLength, t);
 			info = entry->getInfo();
 		}
 		t->setInformation(info);

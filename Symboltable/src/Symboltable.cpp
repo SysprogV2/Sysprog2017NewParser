@@ -5,6 +5,7 @@
  *      Author: knad0001
  */
 #include "../includes/Symboltable.h"
+#include "../../Scanner/includes/Token.h"
 
 Symboltable::Symboltable() {
 	density = new int[TABLE_SIZE];
@@ -32,7 +33,7 @@ Symboltable::~Symboltable() {
 //	return hash;
 //}
 
-int Symboltable::hash(char *str)
+static int Symboltable::hash(char *str)
 {
 	unsigned long hash = 5381;
 	int c;
@@ -43,7 +44,7 @@ int Symboltable::hash(char *str)
 	return hash % TABLE_SIZE;
 }
 
-SymtabEntry* Symboltable::insert(char *lexem, int size) {
+SymtabEntry* Symboltable::insert(char *lexem, int size, Token* token) {
 //	size++;
 	int key = hash(lexem);
 	if (hashTab[key] == nullptr) {
@@ -54,15 +55,15 @@ SymtabEntry* Symboltable::insert(char *lexem, int size) {
 	}
 	char* lexemPtr = strTab->insert(lexem, size);
 	density[key]++;
-	hashTab[key]->setInfo(new Information(lexemPtr));
+	hashTab[key]->setInfo(new Information(lexemPtr, token));
 	return hashTab[key];
 }
+
 
 /* checks if the given lexem is already in the table */
 /* returns NULL if not 								 */
 /* returns corresponding Information* object if it is*/
-Information* Symboltable::lookup(char* lexem) {
-	int key = hash(lexem);
+Information* Symboltable::lookup(int key) {
 	SymtabEntry* entry = hashTab[key];
 	int tmp = 0;
 	while (tmp < density[key]) {
@@ -72,6 +73,13 @@ Information* Symboltable::lookup(char* lexem) {
 		entry = entry->getNext();
 	}
 	return nullptr;
+}
+
+/* checks if the given lexem is already in the table */
+/* returns NULL if not 								 */
+/* returns corresponding Information* object if it is*/
+Information* Symboltable::lookup(char* lexem) {
+	return lookup(hash(lexem));
 }
 
 void Symboltable::print() {

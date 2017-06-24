@@ -29,11 +29,13 @@ enum class NodeType {
 
 enum class CheckType {
 	emptyType,
+
 	intType,
 	intArrayType,
 	arrayType,
 	noType,
 	errorType,
+
 	opPlus,
 	opMinus,
 	opMult,
