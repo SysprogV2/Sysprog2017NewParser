@@ -1,0 +1,13 @@
+dies ist ein :*Kommentar
+
+Kommentar*: 
+4 Zeile ok :* Parser-Fehler *:
+
+:*kjfksjf*jfjskfj*:
+test
+:*Kommentar***:
+sichtbar
+*:
+end
+
+
