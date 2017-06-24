@@ -5,7 +5,8 @@
  *      Author: marius
  */
 
-#include <includes/Parser.h>
+#include <cstring>
+#include "../includes/Parser.h"
 #include "../../Scanner/includes/Scanner.h"
 
 Parser::Parser(Scanner* s, char* output) {
@@ -35,7 +36,7 @@ Node* Parser::parseProg() {
 
 Node* Parser::parseDecls() {
 	auto decls = createNode(NodeType::DECLS);
-	auto info = scanner->getInfo(token->getKey());
+	auto info = token->getInformation();
 	if (info->getType() == InfoTyp::inttyp) {
 		decls->addNode(parseDecl());
 		decls->addNode(match(State::Semikolon));
@@ -54,7 +55,7 @@ Node* Parser::parseDecl() {
 
 Node* Parser::parseArray() {
 	auto array = createNode(NodeType::ARRAY);
-	if (token->getTokenType() == State::EckigeKlammerAuf) {
+	if (token->getType() == State::EckigeKlammerAuf) {
 		array->addNode(match(State::EckigeKlammerAuf));
 		array->addNode(match(State::Number));
 		array->addNode(match(State::EckigeKlammerZu));
@@ -64,8 +65,8 @@ Node* Parser::parseArray() {
 
 Node* Parser::parseStatements() {
 	auto statements = createNode(NodeType::STATEMENTS);
-	auto infoType = scanner->getInfo(token->getKey())->getType();
-	auto tokenType = token->getTokenType();
+	auto infoType = token->getInformation()->getType();
+	auto tokenType = token->getType();
 	if (infoType == InfoTyp::Identifier || infoType == InfoTyp::writetyp
 			|| infoType == InfoTyp::readtyp
 			|| tokenType == State::GeschweifteKlammerAuf
@@ -79,8 +80,8 @@ Node* Parser::parseStatements() {
 
 Node* Parser::parseStatement() {
 	auto statement = createNode(NodeType::STATEMENT);
-	auto infoType = scanner->getInfo(token->getKey())->getType();
-	auto tokenType = token->getTokenType();
+	auto infoType = token->getInformation()->getType();
+	auto tokenType = token->getType();
 	if (infoType == InfoTyp::Identifier) {
 		statement->addNode(match(InfoTyp::Identifier));
 		statement->addNode(parseIndex());
@@ -130,8 +131,8 @@ Node* Parser::parseExp() {
 
 Node* Parser::parseExp2() {
 	auto exp2 = createNode(NodeType::EXP2);
-	auto infoType = scanner->getInfo(token->getKey())->getType();
-	auto tokenType = token->getTokenType();
+	auto infoType = token->getInformation()->getType();
+	auto tokenType = token->getType();
 	if (tokenType == State::RundeKlammerAuf) {
 		exp2->addNode(match(State::RundeKlammerAuf));
 		exp2->addNode(parseExp());
@@ -155,7 +156,7 @@ Node* Parser::parseExp2() {
 
 Node* Parser::parseIndex() {
 	auto index = createNode(NodeType::INDEX);
-	if (token->getTokenType() == State::EckigeKlammerAuf) {
+	if (token->getType() == State::EckigeKlammerAuf) {
 		index->addNode(match(State::EckigeKlammerAuf));
 		index->addNode(parseExp());
 		index->addNode(match(State::EckigeKlammerZu));
@@ -165,7 +166,7 @@ Node* Parser::parseIndex() {
 
 Node* Parser::parseOpExp() {
 	auto op_exp = createNode(NodeType::OP_EXP);
-	auto tokenType = token->getTokenType();
+	auto tokenType = token->getType();
 	if (tokenType == State::Plus || tokenType == State::Minus
 			|| tokenType == State::Stern
 			|| tokenType == State::VorwaertsSchraegstrich
@@ -181,7 +182,7 @@ Node* Parser::parseOpExp() {
 
 Node* Parser::parseOp() {
 	auto op = createNode(NodeType::OP);
-	auto tokenType = token->getTokenType();
+	auto tokenType = token->getType();
 	if (tokenType == State::Plus) {
 		op->addNode(match(State::Plus));
 	} else if (tokenType == State::Minus) {
@@ -207,35 +208,34 @@ Node* Parser::parseOp() {
 }
 
 void Parser::nextToken() {
-	token = new Token();
-	scanner->nextToken(token);
+	token = scanner->nextToken();
 }
 
 Node* Parser::match(State typ) {
-	if (token->getTokenType() != typ) {
+	if (token->getType() != typ) {
 		error();
 	}
 	auto leaf = createNode(NodeType::LEAF);
 	leaf->setToken(token);
-	leaf->setKey(token->getKey(), token->getContent());
+	leaf->setKey(token->getKey(), token->getValue());
 	nextToken();
 	return leaf;
 }
 
 Node* Parser::match(InfoTyp typ) {
-	if (scanner->getInfo(token->getKey())->getType() != typ) {
+	if (token->getInformation()->getType() != typ) {
 		error();
 	}
 	auto leaf = createNode(NodeType::LEAF);
 	leaf->setToken(token);
-	leaf->setKey(token->getKey(), token->getContent());
+	leaf->setKey(token->getKey(), token->getValue());
 	nextToken();
 	return leaf;
 }
 
 void Parser::error() {
 	fprintf(stderr, "unexpected token '%s' at line '%d', column '%d'\n",
-			token->getContent(), token->getZeile(), token->getSpalte());
+			token->getValue(), token->getLine(), token->getColumn());
 	printf("stop\n");
 	exit(1);
 }
@@ -245,8 +245,8 @@ Node* Parser::createNode(NodeType ntype) {
 }
 
 void Parser::errorTypeCheck(const char* message, Token* token) {
-	fprintf(stderr, "error Line: %i Column: %i %s \n", token->getZeile(),
-			token->getSpalte(), message);
+	fprintf(stderr, "error Line: %i Column: %i %s \n", token->getLine(),
+			token->getColumn(), message);
 	printf("stop\n");
 	exit(1);
 }
